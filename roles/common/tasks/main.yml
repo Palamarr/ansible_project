@@ -1,0 +1,36 @@
+# tasks file for common
+
+#install all basic packeges
+- name: check connection
+  ping:
+
+- name: print ansible family
+  ansible.builtin.debug:
+    msg: "{{ansible_os_family}}"
+
+- name: update packeges
+  ansible.builtin.apt:
+    update_cache: yes
+  become: true
+
+- name: sudo apt install ca-certificates curl
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present #default version of packages
+  become: true
+
+#create service user and directory
+- name: create service user his password
+  ansible.builtin.user:
+#vars in roles/common/vars
+    name: "{{ service_user }}"
+    password: "{{ service_user_pss }}"
+
+- name: create directory for user
+  ansible.builtin.file:
+    path: "/home/{{ service_user }}/{{ service_dir }}"
+    state: directory
+    owner: "{{ service_user }}"
+    mode: '0755'

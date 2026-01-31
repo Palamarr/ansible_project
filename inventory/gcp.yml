@@ -1,0 +1,17 @@
+---
+plugin: gcp_compute
+#id of project on gcp
+projects:
+  - gold-setup-485310-g8
+filters:
+  - status = RUNNING
+#type of authentification
+auth_kind: serviceaccount
+#way to the file with date of authentification
+service_account_file: /home/volodymyr/seriosly_app/inventory/gold-setup-485310-g8-cc25d296ac33.json
+#for identification servers by name in gcp
+hostnames:
+  - name
+
+compose:
+  ansible_host: networkInterfaces[0].accessConfigs[0].natIP
